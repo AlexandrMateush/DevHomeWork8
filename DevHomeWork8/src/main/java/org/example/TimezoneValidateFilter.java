@@ -24,7 +24,7 @@ public class TimezoneValidateFilter implements Filter {
             throws IOException, ServletException {
         String timezoneParam = request.getParameter("timezone");
 
-        if (timezoneParam == null || timezoneParam.isEmpty() || !isValidTimezone(timezoneParam)) {
+        if (timezoneParam == null || timezoneParam.isEmpty() || isValidTimezone(timezoneParam)) {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid timezone");
         } else {
