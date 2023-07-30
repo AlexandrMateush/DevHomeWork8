@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.example.TimezoneValidateFilterTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-07-29T16:39:43" hostname="DESKTOP-DEB41DV" time="0.028">
+<testsuite name="org.example.TimezoneValidateFilterTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-07-30T13:00:25" hostname="DESKTOP-DEB41DV" time="0.032">
   <properties/>
-  <testcase name="testValidTimezone()" classname="org.example.TimezoneValidateFilterTest" time="0.028"/>
+  <testcase name="testValidTimezone()" classname="org.example.TimezoneValidateFilterTest" time="0.032"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
