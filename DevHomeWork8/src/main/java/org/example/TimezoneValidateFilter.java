@@ -2,48 +2,56 @@ package org.example;
 
 
 import java.io.IOException;
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletResponse;
 
 
 @WebFilter("/time")
-public class TimezoneValidateFilter implements Filter {
+public class TimezoneValidateFilter extends HttpFilter {
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
-        String timezoneParam = request.getParameter("timezone");
-
-        if (timezoneParam == null || timezoneParam.isEmpty() || !isValidTimezone(timezoneParam)) {
-            response.setContentType("text/html");
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        String timezone = request.getParameter("timezone");
+        boolean isValid = isValidTimezone(timezone);
+        if (!isValid) {
+            response.getWriter().write("Invalid timezone");
             response.setCharacterEncoding("UTF-8");
-            ((HttpServletResponse) response).sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid timezone");
-            response.getWriter().println("<html><body>");
-            response.getWriter().println("<h1>Invalid timezone</h1>");
-            response.getWriter().println("</body></html>");
+            HttpServletResponse httpResponse = (HttpServletResponse) response;
+            httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid timezone");
+
+
         } else {
             chain.doFilter(request, response);
         }
     }
-
     @Override
     public void destroy() {
     }
 
     private boolean isValidTimezone(String timezone) {
-        java.util.TimeZone tz = java.util.TimeZone.getTimeZone(timezone);
-        return tz.getID().equals(timezone);
+        if (timezone == null || !timezone.startsWith("UTC")) {
+            return false;
+        }
+        try {
+            int utcOffset = Integer.parseInt(timezone.substring(3));
+             if (utcOffset > -13 && utcOffset < 15) {
+                 return true;
+             }
+            return false;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
 }
-
