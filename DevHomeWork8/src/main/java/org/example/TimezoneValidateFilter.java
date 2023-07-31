@@ -40,14 +40,16 @@ public class TimezoneValidateFilter extends HttpFilter {
     }
 
     private boolean isValidTimezone(String timezone) {
-        if (timezone == null || !timezone.startsWith("UTC")) {
+        if (timezone == null || timezone.equals("")) {
+            return true;
+        } else if (!timezone.startsWith("UTC")) {
             return false;
         }
         try {
             int utcOffset = Integer.parseInt(timezone.substring(3));
-             if (utcOffset > -13 && utcOffset < 15) {
-                 return true;
-             }
+            if (utcOffset > -13 && utcOffset < 15) {
+                return true;
+            }
             return false;
         } catch (NumberFormatException e) {
             return false;
