@@ -29,18 +29,17 @@ public class TimezoneValidateFilter extends HttpFilter {
             response.setCharacterEncoding("UTF-8");
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid timezone");
-
-
         } else {
             chain.doFilter(request, response);
         }
     }
+
     @Override
     public void destroy() {
     }
 
     private boolean isValidTimezone(String timezone) {
-        if (timezone == null || timezone.equals("")) {
+        if (timezone == null || timezone.isEmpty()) {
             return true;
         } else if (!timezone.startsWith("UTC")) {
             return false;
@@ -55,5 +54,4 @@ public class TimezoneValidateFilter extends HttpFilter {
             return false;
         }
     }
-
 }
