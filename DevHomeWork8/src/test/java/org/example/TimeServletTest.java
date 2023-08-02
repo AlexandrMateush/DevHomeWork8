@@ -29,7 +29,7 @@ public class TimeServletTest {
         TimeServlet timeServlet = new TimeServlet();
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
-        String timezoneParam = "UTC";
+        String timezoneParam = "UTC+11";
         request.setParameter("timezone", timezoneParam);
 
         timeServlet.doGet(request, response);

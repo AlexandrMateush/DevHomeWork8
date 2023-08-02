@@ -26,6 +26,7 @@ public class TimeServlet extends HttpServlet {
         response.getWriter().println("<html><body>");
         response.getWriter().println("<h1>Поточний час (" + timezone.getID() + ")</h1>");
         response.getWriter().println("<p>" + currentTime + "</p>");
+        System.out.println(currentTime);
         response.getWriter().println("</body></html>");
     }
 
@@ -34,7 +35,9 @@ public class TimeServlet extends HttpServlet {
             try {
                 int totalOffset = Integer.parseInt(timezoneParam.substring(3));
                 if (totalOffset >= -12 * 60 && totalOffset <= 14 * 60) {
-                    return TimeZone.getTimeZone("GMT" + (totalOffset >= 0 ? "+" : "-") + totalOffset);
+                    if( totalOffset < 0 && totalOffset > -13){
+                        return TimeZone.getTimeZone("GMT" + totalOffset);
+                    }return TimeZone.getTimeZone("GMT" + (totalOffset > 0 && totalOffset < 15 ? "+" : " ") + totalOffset);
                 }
             } catch (NumberFormatException e) {
             }
